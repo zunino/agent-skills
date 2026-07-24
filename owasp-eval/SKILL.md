@@ -13,9 +13,8 @@ This skill consumes the inventory produced by `/analyze-ai-features`. It does **
 
 ## Inputs
 
-- **Inventory file** — path to the `ai-features.md` file produced by `/analyze-ai-features`. If not provided, default to `docs/ai-sec-analysis/ai-features.md` relative to the repository root.
+- **Inventory file** — path to the `ai-features.md` file produced by `/analyze-ai-features`. If not provided, default to `docs/ai-sec-analysis/ai-features.md` <important>relative to the repository root</important>.
 - **Repository path** — the root of the repository being assessed. Used to verify findings against actual code. If not specified, use the current workspace root.
-- **Output path** (optional) — defaults to `docs/ai-sec-analysis/owasp-report.md`, relative to the repository root.
 
 ## Prerequisites
 
@@ -23,7 +22,7 @@ An AI feature inventory file must exist. If it does not, instruct the user to ru
 
 ## Output
 
-A single markdown file following the format in [Output Format](#output-format) below.
+A markdown report (`docs/ai-sec-analysis/owasp-report.md`) following the format in [Output Format](#output-format) below, plus a structured JSON file (`docs/ai-sec-analysis/owasp-report.json`) following the format in [Structured Output Format](#structured-output-format) below. <important>Both paths are relative to the repository root.</important>
 
 ## Reference Documents
 
@@ -123,7 +122,7 @@ Group these into a "Cross-Cutting Assessment" section in the report.
 
 ### Step 6 — Produce the report
 
-Write the output using the format below.
+Write the markdown report using the format below, then write the structured JSON output following the format in [Structured Output Format](#structured-output-format).
 
 ## Output Format
 
@@ -286,6 +285,51 @@ Sort by priority (critical first), then by effort (low first within same priorit
 
 [2-3 paragraph narrative explaining the rating, referencing the key findings and the project's architectural maturity.]
 ```
+
+## Structured Output Format
+
+In addition to the markdown report, write a JSON file to the structured output path (default `docs/ai-sec-analysis/owasp-report.json`). The JSON must follow this schema:
+
+```json
+{
+  "repository": "<name or path>",
+  "date": "<ISO 8601 date>",
+  "references": ["owasp-top10-llm-2025", "owasp-top10-agentic-2026"],
+  "overall_rating": "Low | Moderate | Good | Strong",
+  "summary": {
+    "total_findings": 0,
+    "by_status": {
+      "vulnerable": 0,
+      "partially-mitigated": 0,
+      "mitigated": 0,
+      "n/a": 0
+    },
+    "by_severity": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  },
+  "findings": [
+    {
+      "owasp_item": "LLM01",
+      "title": "Prompt Injection",
+      "feature": "<feature name>",
+      "status": "vulnerable | partially-mitigated | mitigated | n/a",
+      "severity": "critical | high | medium | low",
+      "summary": "<1-sentence summary>"
+    }
+  ]
+}
+```
+
+Notes:
+
+- `severity` is derived from the Priority Matrix priority in the markdown report. Findings with status `mitigated` or `n/a` get severity `low` (they pose no active risk).
+- `summary.by_severity` counts **only non-mitigated findings** (vulnerable + partially-mitigated). Mitigated and `n/a` findings are excluded from severity counts since they represent no active risk. This is the field a CI gate script should check (e.g., fail the pipeline if `high` > 0 or `critical` > 0).
+- `findings` includes **all** assessed items — one entry per feature per applicable OWASP item. Cross-cutting findings use feature name `"cross-cutting"`.
+- `references` should only include the OWASP lists that were actually applied (based on feature classifications present in the inventory).
 
 ## Guidelines
 

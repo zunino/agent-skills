@@ -14,7 +14,7 @@ This skill does **not** perform security analysis. It only identifies and classi
 ## Inputs
 
 - **Repository path** — the root of the repository to analyze. If not specified, use the current workspace root.
-- **Output path** (optional) — defaults to `docs/ai-sec-analysis/ai-features.md`, relative to the repository root.
+- **Output path** (optional) — defaults to `docs/ai-sec-analysis/ai-features.md`, <important>relative to the repository root</important>.
 
 ## Output
 
