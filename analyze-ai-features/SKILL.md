@@ -174,6 +174,10 @@ Write the output to `docs/ai-sec-analysis/ai-features.md` using the format below
 [Any observations about the codebase's AI architecture, patterns, or anomalies discovered during analysis.]
 ```
 
+## Output Language
+
+All output (the inventory markdown file) must be written in **Brazilian Portuguese**. This includes section headings, descriptions, evidence notes, and the Notes section. Technical terms that are commonly used in English (e.g., framework names, package names, file paths, classification labels like `llm-direct`) may remain in English.
+
 ## Guidelines
 
 - **Be thorough but not redundant.** If 20 gateways follow the same pattern (e.g., `UC → Gateway → VercelGateway`), list them all in the table but describe the shared pattern once in Notes.

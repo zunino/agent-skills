@@ -331,6 +331,10 @@ Notes:
 - `findings` includes **all** assessed items — one entry per feature per applicable OWASP item. Cross-cutting findings use feature name `"cross-cutting"`.
 - `references` should only include the OWASP lists that were actually applied (based on feature classifications present in the inventory).
 
+## Output Language
+
+All output must be written in **Brazilian Portuguese**. This includes the markdown report (section headings, descriptions, findings, mitigations, priority matrix, conclusion) and the string values in the JSON file. Technical terms that are commonly used in English (e.g., framework names, file paths, OWASP item IDs, status values like `vulnerable`) may remain in English. The JSON property names (keys) must remain in English.
+
 ## Guidelines
 
 - **Verify against actual code.** Do not assess from the inventory description alone. Read the files cited in the inventory and examine the code to confirm or refute each finding.
