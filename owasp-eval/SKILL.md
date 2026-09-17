@@ -335,6 +335,8 @@ Notes:
 
 All output must be written in **Brazilian Portuguese**. This includes the markdown report (section headings, descriptions, findings, mitigations, priority matrix, conclusion) and the string values in the JSON file. Technical terms that are commonly used in English (e.g., framework names, file paths, OWASP item IDs, status values like `vulnerable`) may remain in English. The JSON property names (keys) must remain in English.
 
+<important>Do not insert hard line breaks within a paragraph. Write each paragraph as a single unbroken line and let the viewer wrap it. Hard breaks produce short, broken lines in some Markdown viewers.</important>
+
 ## Guidelines
 
 - **Verify against actual code.** Do not assess from the inventory description alone. Read the files cited in the inventory and examine the code to confirm or refute each finding.
